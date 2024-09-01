@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RezWare Chat | Bypass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #0f0f0f;
+            margin: 0;
+            overflow: hidden;
+        }
+        #textbox {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            background-color: #191919;
+            border: 2px solid #333333;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+        }
+        #textbox:focus {
+            border-color: #ff8c00;
+            box-shadow: 0 0 10px #ff8c00;
+        }
+        #convertButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff8c00;
+            border: none;
+            color: white;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        #convertButton::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 70%);
+            transition: transform 0.5s ease-in-out;
+            transform: translateX(-150%) translateY(-150%);
+        }
+        #convertButton:hover::before {
+            transform: translateX(-50%) translateY(-50%);
+        }
+        #convertButton:hover {
+            background-color: #e67e22;
+            box-shadow: 0 0 15px #ff8c00;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        #notification {
+            margin-top: 10px;
+            font-size: 14px;
+            color: lightgreen;
+            display: none;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-color: #0f0f0f; }
+            50% { background-color: #202020; }
+            100% { background-color: #0f0f0f; }
+        }
+        body {
+            animation: backgroundAnimation 10s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="color:white;">RezWare Chat | Bypass</h1>
+    <input type="text" id="textbox" placeholder="Enter text here">
+    <button id="convertButton">Convert & Copy</button>
+    <div id="output"></div>
+    <div id="notification">Text copied to clipboard!</div>
+
+    <script>
+        const fancyLetters = {
+            'a': '🅰', 'b': '🅱', 'c': '🅲', 'd': '🅳', 'e': '🅴',
+            'f': '🅵', 'g': '🅶', 'h': '🅷', 'i': '🅸', 'j': '🅹',
+            'k': '🅺', 'l': '🅻', 'm': '🅼', 'n': '🅽', 'o': '🅾',
+            'p': '🅿', 'q': '🆀', 'r': '🆁', 's': '🆂', 't': '🆃',
+            'u': '🆄', 'v': '🆅', 'w': '🆆', 'x': '🆇', 'y': '🆈', 'z': '🆉'
+        };
+
+        const russianToEnglish = {
+            'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+            'е': 'e', 'ё': 'e', 'ж': 'zh', 'з': 'z', 'и': 'i',
+            'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+            'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
+            'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch',
+            'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '',
+            'э': 'e', 'ю': 'yu', 'я': 'ya'
+        };
+
+        document.getElementById('convertButton').onclick = function() {
+            let input = document.getElementById('textbox').value.toLowerCase();
+            let output = '';
+
+            // Проверка и замена русских букв на английские эквиваленты
+            input = input.split('').map(char => russianToEnglish[char] || char).join('');
+
+            // Преобразование в "фэнси" буквы
+            for (let char of input) {
+                output += fancyLetters[char] || char;
+            }
+
+            document.getElementById('output').textContent = output;
+
+            // Копирование в буфер обмена
+            navigator.clipboard.writeText(output).then(() => {
+                const notification = document.getElementById('notification');
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 2000);
+            });
+        };
+    </script>
+
+</body>
+</html>
